@@ -3,15 +3,24 @@ import { Formik, Field, ErrorMessage, Form } from 'formik';
 import { AddProfileSchema } from '../utils/schema';
 import { useId } from 'react';
 import { nanoid } from 'nanoid';
+import { addContact } from '../../redux/contactsSlice';
+import { useDispatch } from 'react-redux';
 
 const INITIAL_VALUES = {
   name: '',
   number: '',
 };
 
-const ContactForm = ({ addContact }) => {
-  const onHandleSubmit = (values, actions) => {
-    addContact({ id: nanoid(), ...values });
+const ContactForm = () => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = (value, actions) => {
+    const lastContact = {
+      ...value,
+      id: nanoid(),
+    };
+    const action = addContact(lastContact);
+    dispatch(action);
     actions.resetForm();
   };
   const nameField = useId();
@@ -21,7 +30,7 @@ const ContactForm = ({ addContact }) => {
     <Formik
       initialValues={INITIAL_VALUES}
       validationSchema={AddProfileSchema}
-      onSubmit={onHandleSubmit}
+      onSubmit={handleSubmit}
     >
       <Form className={css.container}>
         <label htmlFor={nameField} className={css.labelName}>
