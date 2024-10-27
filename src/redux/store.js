@@ -22,7 +22,7 @@ const usersConfig = {
 export const store = configureStore({
   reducer: {
     contacts: persistReducer(usersConfig, contactsReducer),
-    filter: filtersReducer,
+    filters: filtersReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
