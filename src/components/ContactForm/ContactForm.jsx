@@ -13,16 +13,16 @@ const INITIAL_VALUES = {
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-
-  const handleSubmit = (value, actions) => {
-    const lastContact = {
-      ...value,
+  const handleSubmit = (values, actions) => {
+    const newContact = {
+      name: values.name,
+      number: values.number,
       id: nanoid(),
     };
-    const action = addContact(lastContact);
-    dispatch(action);
     actions.resetForm();
+    dispatch(addContact(newContact));
   };
+
   const nameField = useId();
   const numberField = useId();
 
